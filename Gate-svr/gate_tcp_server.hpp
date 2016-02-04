@@ -4,6 +4,8 @@
 #include "gate_tcp_connection.hpp"
 #include "../dependence/auto_id_manager.hpp"
 #include <boost/bind.hpp>
+#include <boost/function.hpp>
+
 //todo 客户端首先连接gate-mgr,然后gate-mgr给每个gate-server发消息，最先回复的获得转发权。
 //因此每个gate-server启动最先做的事情是区gate-mgr那里注册
 //gate-server以线程为单位
@@ -22,25 +24,25 @@ public:
 	{
 		manager_pointer_.reset(new Auto_ID_Manager<pointer>(max_connections));
 	}
-	void start(std::string mgr_port, std::string mgr_ip) {
-		do_connect(mgr_port, mgr_ip, gate_mgr_connection_id_);
-		//
-		pointer pointer_ = Gate_Tcp_Connection::create(acceptor_.get_io_service(), manager_pointer_, &forward_rules_, &obj_mgr_connection_id_);
-		boost::asio::async_connect(pointer_->socket(),
-			resolver_.resolve({ port.c_str(), ip.c_str() }),
-			boost::bind(&Gate_Tcp_Server::handle_connect, shared_from_this(), pointer_, connection_id, _2, _3));
-		//TODO 在回调里发送注册消息
+	void start(int mgr_port, std::string mgr_ip) {
+		do_connect(mgr_port, mgr_ip, boost::bind(&Gate_Tcp_Server::handle_connect_gate_mgr, shared_from_this(), _1, _2, _3));
+	}
+	void connect_obj_mgr(int port, std::string ip) {
+		do_connect(port, ip, boost::bind(&Gate_Tcp_Server::handle_connect_obj_mgr, shared_from_this(), _1, _2, _3));
 	}
 	void start_accept(){
-		pointer pointer_ = Gate_Tcp_Connection::create(acceptor_.get_io_service(), manager_pointer_, &forward_rules_, &obj_mgr_connection_id_);
+		pointer pointer_ = Gate_Tcp_Connection::create(acceptor_.get_io_service(), manager_pointer_, &forward_rules_, &obj_mgr_connection_id_,
+			boost::bind(&Gate_Tcp_Server::connect_obj_mgr, shared_from_this(), _1, _2));
 		acceptor_.async_accept(pointer_->socket(), boost::bind(&Gate_Tcp_Server::handle_accept, shared_from_this(), pointer_,
 			boost::asio::placeholders::error));
 	}
-	void do_connect(std::string port, std::string ip, int& connection_id) {
-		pointer pointer_ = Gate_Tcp_Connection::create(acceptor_.get_io_service(), manager_pointer_, &forward_rules_, &obj_mgr_connection_id_);
+	void do_connect(int port, std::string ip, 
+		boost::function<void(pointer, const boost::system::error_code&, tcp::resolver::iterator)> func) {
+		pointer pointer_ = Gate_Tcp_Connection::create(acceptor_.get_io_service(), manager_pointer_, &forward_rules_, &obj_mgr_connection_id_, 
+			boost::bind(&Gate_Tcp_Server::connect_obj_mgr, shared_from_this(), _1, _2));
 		boost::asio::async_connect(pointer_->socket(), 
-			resolver_.resolve({port.c_str(), ip.c_str()}), 
-			boost::bind(&Gate_Tcp_Server::handle_connect, shared_from_this(), pointer_, connection_id, _2, _3));
+			tcp::endpoint(boost::asio::ip::address_v4::from_string(ip), port),
+			boost::bind(func, pointer_, _1, _2));
 	}
 private:
 	tcp::resolver resolver_;
@@ -58,10 +60,27 @@ private:
 		}
 		start_accept();
 	}
-	void handle_connect(pointer pointer_, int& connection_id, const boost::system::error_code& error, tcp::resolver::iterator) {
+	void handle_connect_gate_mgr(pointer pointer_, const boost::system::error_code& error, tcp::resolver::iterator) {
 		if (!error) {
-			connection_id = manager_pointer_->add_to_manager(pointer_);
-			pointer_->set_id(connection_id);
+			gate_mgr_connection_id_ = manager_pointer_->add_to_manager(pointer_);
+			pointer_->set_id(gate_mgr_connection_id_);
+			//send register message
+			buf_ptr buf;
+			gr::Server_Info msg;
+			msg.set_ip(acceptor_.local_endpoint().address().to_string());
+			msg.set_port(port_);
+			buf->prepare(sizeof(Header) + sizeof(msg));
+			((Header*)buf->get_buffer())->message_id = msgid::GateToGatemgr::gate_register;
+			((Header*)buf->get_buffer())->body_size = sizeof(msg);
+			msg.SerializeToArray(buf->get_buffer(sizeof(Header)), sizeof(msg));
+			pointer_->do_write(buf);
+		}
+	}
+	void handle_connect_obj_mgr(pointer pointer_, const boost::system::error_code& error, tcp::resolver::iterator) {
+		if (!error) {
+			obj_mgr_connection_id_ = manager_pointer_->add_to_manager(pointer_);
+			pointer_->set_id(obj_mgr_connection_id_);
+			start_accept();
 		}
 	}
 	const manager_pointer get_manager_pointer(){

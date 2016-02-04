@@ -19,6 +19,7 @@ namespace msgid
 	}
 	namespace GatemgrToGate {
 		cs pick_fastest = 60;
+		cs notify_obj_mgr_info = 61;
 	}
 	namespace GateToGatemgr {
 		cs gate_register = 70;
@@ -26,6 +27,9 @@ namespace msgid
 	}
 	namespace GatemgrToCli {
 		cs tell_gate_info = 90;
+	}
+	namespace ObjmgrToGatemgr {
+		cs objmgr_register = 100;
 	}
 }
 

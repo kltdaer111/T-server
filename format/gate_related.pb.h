@@ -36,12 +36,12 @@ void protobuf_AddDesc_gate_5frelated_2eproto();
 void protobuf_AssignDesc_gate_5frelated_2eproto();
 void protobuf_ShutdownFile_gate_5frelated_2eproto();
 
-class Gate_Register;
 class Gatemgr_Apply_Fastest_Gate;
 class Inter_Server_Register;
 class Notify_Connection_Id;
 class Notify_Obj_Master_Player_Login;
 class Player_Login;
+class Server_Info;
 
 // ===================================================================
 
@@ -442,32 +442,32 @@ class Gatemgr_Apply_Fastest_Gate : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class Gate_Register : public ::google::protobuf::Message {
+class Server_Info : public ::google::protobuf::Message {
  public:
-  Gate_Register();
-  virtual ~Gate_Register();
+  Server_Info();
+  virtual ~Server_Info();
 
-  Gate_Register(const Gate_Register& from);
+  Server_Info(const Server_Info& from);
 
-  inline Gate_Register& operator=(const Gate_Register& from) {
+  inline Server_Info& operator=(const Server_Info& from) {
     CopyFrom(from);
     return *this;
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const Gate_Register& default_instance();
+  static const Server_Info& default_instance();
 
-  void Swap(Gate_Register* other);
+  void Swap(Server_Info* other);
 
   // implements Message ----------------------------------------------
 
-  inline Gate_Register* New() const { return New(NULL); }
+  inline Server_Info* New() const { return New(NULL); }
 
-  Gate_Register* New(::google::protobuf::Arena* arena) const;
+  Server_Info* New(::google::protobuf::Arena* arena) const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const Gate_Register& from);
-  void MergeFrom(const Gate_Register& from);
+  void CopyFrom(const Server_Info& from);
+  void MergeFrom(const Server_Info& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -482,7 +482,7 @@ class Gate_Register : public ::google::protobuf::Message {
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const;
-  void InternalSwap(Gate_Register* other);
+  void InternalSwap(Server_Info* other);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return _internal_metadata_.arena();
@@ -498,11 +498,16 @@ class Gate_Register : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // optional int32 ip = 1;
+  // optional string ip = 1;
   void clear_ip();
   static const int kIpFieldNumber = 1;
-  ::google::protobuf::int32 ip() const;
-  void set_ip(::google::protobuf::int32 value);
+  const ::std::string& ip() const;
+  void set_ip(const ::std::string& value);
+  void set_ip(const char* value);
+  void set_ip(const char* value, size_t size);
+  ::std::string* mutable_ip();
+  ::std::string* release_ip();
+  void set_allocated_ip(::std::string* ip);
 
   // optional int32 port = 2;
   void clear_port();
@@ -510,12 +515,12 @@ class Gate_Register : public ::google::protobuf::Message {
   ::google::protobuf::int32 port() const;
   void set_port(::google::protobuf::int32 value);
 
-  // @@protoc_insertion_point(class_scope:gr.Gate_Register)
+  // @@protoc_insertion_point(class_scope:gr.Server_Info)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   bool _is_default_instance_;
-  ::google::protobuf::int32 ip_;
+  ::google::protobuf::internal::ArenaStringPtr ip_;
   ::google::protobuf::int32 port_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_gate_5frelated_2eproto();
@@ -523,7 +528,7 @@ class Gate_Register : public ::google::protobuf::Message {
   friend void protobuf_ShutdownFile_gate_5frelated_2eproto();
 
   void InitAsDefaultInstance();
-  static Gate_Register* default_instance_;
+  static Server_Info* default_instance_;
 };
 // ===================================================================
 
@@ -635,34 +640,63 @@ inline void Gatemgr_Apply_Fastest_Gate::set_client_connection_id(::google::proto
 
 // -------------------------------------------------------------------
 
-// Gate_Register
+// Server_Info
 
-// optional int32 ip = 1;
-inline void Gate_Register::clear_ip() {
-  ip_ = 0;
+// optional string ip = 1;
+inline void Server_Info::clear_ip() {
+  ip_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::google::protobuf::int32 Gate_Register::ip() const {
-  // @@protoc_insertion_point(field_get:gr.Gate_Register.ip)
-  return ip_;
+inline const ::std::string& Server_Info::ip() const {
+  // @@protoc_insertion_point(field_get:gr.Server_Info.ip)
+  return ip_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void Gate_Register::set_ip(::google::protobuf::int32 value) {
+inline void Server_Info::set_ip(const ::std::string& value) {
   
-  ip_ = value;
-  // @@protoc_insertion_point(field_set:gr.Gate_Register.ip)
+  ip_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:gr.Server_Info.ip)
+}
+inline void Server_Info::set_ip(const char* value) {
+  
+  ip_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:gr.Server_Info.ip)
+}
+inline void Server_Info::set_ip(const char* value, size_t size) {
+  
+  ip_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:gr.Server_Info.ip)
+}
+inline ::std::string* Server_Info::mutable_ip() {
+  
+  // @@protoc_insertion_point(field_mutable:gr.Server_Info.ip)
+  return ip_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* Server_Info::release_ip() {
+  
+  return ip_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void Server_Info::set_allocated_ip(::std::string* ip) {
+  if (ip != NULL) {
+    
+  } else {
+    
+  }
+  ip_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ip);
+  // @@protoc_insertion_point(field_set_allocated:gr.Server_Info.ip)
 }
 
 // optional int32 port = 2;
-inline void Gate_Register::clear_port() {
+inline void Server_Info::clear_port() {
   port_ = 0;
 }
-inline ::google::protobuf::int32 Gate_Register::port() const {
-  // @@protoc_insertion_point(field_get:gr.Gate_Register.port)
+inline ::google::protobuf::int32 Server_Info::port() const {
+  // @@protoc_insertion_point(field_get:gr.Server_Info.port)
   return port_;
 }
-inline void Gate_Register::set_port(::google::protobuf::int32 value) {
+inline void Server_Info::set_port(::google::protobuf::int32 value) {
   
   port_ = value;
-  // @@protoc_insertion_point(field_set:gr.Gate_Register.port)
+  // @@protoc_insertion_point(field_set:gr.Server_Info.port)
 }
 
 #endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS

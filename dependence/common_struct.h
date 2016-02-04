@@ -26,9 +26,9 @@ struct TaskData
 
 struct ServerInfo
 {
-	int m_ip;
+	std::string m_ip;
 	int m_port;
 	ServerInfo() {}
-	ServerInfo(int ip, int port) :m_ip(ip), m_port(port) {}
+	ServerInfo(std::string ip, int port) :m_ip(ip), m_port(port) {}
 };
 #endif

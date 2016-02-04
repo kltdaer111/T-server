@@ -27,8 +27,8 @@ message Gatemgr_Apply_Fastest_Gate
 	int32 client_connection_id = 1;
 }
 
-message Gate_Register
+message Server_Info
 {
-	int32 ip = 1;
+	string ip = 1;
 	int32 port = 2;
 }

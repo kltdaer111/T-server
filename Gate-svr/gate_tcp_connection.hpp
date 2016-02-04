@@ -11,6 +11,9 @@
 #include "../dependence/buffer.hpp"
 #include <cstring>
 #include "../dependence/common_struct.h"
+#include <boost/function.hpp>
+#include <boost/bind.hpp>
+#include <string>
 
 #define HEADER_LENGTH 64
 
@@ -22,11 +25,14 @@ public:
 	typedef std::shared_ptr<Auto_ID_Manager<pointer> > manager_pointer;
 	typedef std::shared_ptr<EasyBuffer> buf_ptr;
 
-	Gate_Tcp_Connection(boost::asio::io_service& io_service, manager_pointer& m_p, std::map<int, int>* forward_rules, int* obj_id):
-				   socket_(io_service), manager_pointer_(m_p), forward_rules_(forward_rules), p_obj_mgr_id_(obj_id), id_(0){}
+	Gate_Tcp_Connection(boost::asio::io_service& io_service, manager_pointer& m_p, 
+		std::map<int, int>* forward_rules, int* obj_id, boost::function<void(int, std::string)> connecting_func):
+		socket_(io_service), manager_pointer_(m_p), forward_rules_(forward_rules), 
+		p_obj_mgr_id_(obj_id), id_(0), connecting_objmgr_func_(connecting_func){}
 	~Gate_Tcp_Connection(){}
-	static pointer create(boost::asio::io_service& io_service, manager_pointer& m_p, std::map<int, int>* forward_rules, int* obj_id){
-		return pointer(new Gate_Tcp_Connection(io_service, m_p, forward_rules, obj_id));
+	static pointer create(boost::asio::io_service& io_service, manager_pointer& m_p, 
+		std::map<int, int>* forward_rules, int* obj_id, boost::function<void(int, std::string)> connecting_func){
+		return pointer(new Gate_Tcp_Connection(io_service, m_p, forward_rules, obj_id, connecting_func));
 	}
 	tcp::socket& socket(){
 		return socket_;
@@ -78,9 +84,10 @@ private:
 	tcp::socket socket_;
 	char header_data_[HEADER_LENGTH];
 	int id_;
-	const int* p_obj_mgr_id_;
+	int* const p_obj_mgr_id_;
 	manager_pointer manager_pointer_;
 	std::map<int, int>* forward_rules_;
+	boost::function<void(int, std::string)> connecting_objmgr_func_;
 };
 
 #endif
