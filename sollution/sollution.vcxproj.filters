@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Gate-Server">
+      <UniqueIdentifier>{7d265b47-afb2-4c86-9eff-4e178cd962b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="network_module">
+      <UniqueIdentifier>{18c717e2-2299-4fda-97eb-4826490d2b21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dependence">
+      <UniqueIdentifier>{ef35922d-7d56-42e9-8569-0fd322bb5da2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="format">
+      <UniqueIdentifier>{c5c8aca5-0634-4597-971a-0db81b2201c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Gate-mgr">
+      <UniqueIdentifier>{5cf4cf63-61e8-44c1-a51b-476725743b52}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Gate-svr\gate_logic.cpp">
+      <Filter>Gate-Server</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Gate-svr\main.cpp">
+      <Filter>Gate-Server</Filter>
+    </ClCompile>
+    <ClCompile Include="..\format\gate_related.pb.cc">
+      <Filter>format</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Gate-svr\gate_tcp_connection.cpp">
+      <Filter>Gate-Server</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Gate-mgr\main.cpp">
+      <Filter>Gate-mgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Gate-mgr\gatemgr_tcp_connection.cpp">
+      <Filter>Gate-mgr</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Gate-svr\gate_logic.h">
+      <Filter>Gate-Server</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Gate-svr\logic_thread.hpp">
+      <Filter>Gate-Server</Filter>
+    </ClInclude>
+    <ClInclude Include="..\network_module\tcp_connection.hpp">
+      <Filter>network_module</Filter>
+    </ClInclude>
+    <ClInclude Include="..\network_module\tcp_server.hpp">
+      <Filter>network_module</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dependence\auto_id_manager.hpp">
+      <Filter>dependence</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dependence\buffer.hpp">
+      <Filter>dependence</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dependence\common_def.h">
+      <Filter>dependence</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dependence\common_struct.h">
+      <Filter>dependence</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dependence\nonblocking_queue.hpp">
+      <Filter>dependence</Filter>
+    </ClInclude>
+    <ClInclude Include="..\format\gate_related.pb.h">
+      <Filter>format</Filter>
+    </ClInclude>
+    <ClInclude Include="..\format\message_header.h">
+      <Filter>format</Filter>
+    </ClInclude>
+    <ClInclude Include="..\format\message_id.h">
+      <Filter>format</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Gate-svr\gate_server_back.hpp">
+      <Filter>Gate-Server</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dependence\task_queue.hpp">
+      <Filter>dependence</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Gate-svr\gate_thread.h">
+      <Filter>Gate-Server</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Gate-svr\gate_tcp_connection.hpp">
+      <Filter>Gate-Server</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Gate-svr\gate_tcp_server.hpp">
+      <Filter>Gate-Server</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Gate-mgr\gate_manager.h">
+      <Filter>Gate-mgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Gate-mgr\gatemgr_tcp_connection.hpp">
+      <Filter>Gate-mgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Gate-mgr\gatemgr_tcp_server.hpp">
+      <Filter>Gate-mgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dependence\order_generator.hpp">
+      <Filter>dependence</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

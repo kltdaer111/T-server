@@ -1,0 +1,6 @@
+*.sdf
+*.o
+*.gch
+*.exe
+*.opendb
+*.suo
