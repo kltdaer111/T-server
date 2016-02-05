@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Gate-svr\gate_logic.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\Gate-svr\main.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -29,12 +26,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Gate-svr\gate_logic.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Gate-svr\logic_thread.hpp">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\network_module\tcp_connection.hpp">
       <Filter>network_module</Filter>
     </ClInclude>
@@ -70,9 +61,6 @@
     </ClInclude>
     <ClInclude Include="..\dependence\task_queue.hpp">
       <Filter>dependence</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Gate-svr\gate_thread.h">
-      <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\Gate-svr\gate_tcp_connection.hpp">
       <Filter>src</Filter>
